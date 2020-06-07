@@ -11,9 +11,9 @@
     <h2> Cashbook on Django </h2>
     <div class="menu">
       <ul>
-        <li>Summary</li>
-        <li>Master</li>
-        <li>Transaction</li>
+        <li><a href="{% url 'mainapp:summary' %}">Summary</a></li>
+        <li><a href="{% url 'mainapp:index' %}">Master</a></li>
+        <li><a href="{% url 'mainapp:usage' %}">Transaction</a></li>
       </ul>
     </div>
   </header>

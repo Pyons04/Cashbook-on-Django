@@ -21,3 +21,11 @@ def filter_usages(usages, master):
             filterd_usages.append(usage)
 
     return filterd_usages
+
+@register.filter
+def graph_data_generator(usages):
+    return '[10,60,80]'
+
+@register.filter
+def graph_label_generator(usages):
+    return "['いか','まぐろ','かんぱち']"

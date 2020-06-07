@@ -1,7 +1,10 @@
 {% extends 'parent.html' %}
 {% load summary_helper %}
+{% load static %}
+ 
 
 {% block contents %}
+
   <h1>Summary</h1>
   <h2>期間で絞り込む</h2>
     <form method="Post">
@@ -11,16 +14,59 @@
       <button type="submit">絞り込む</button>
     </form>
 
+  <div style="width:260px; height:260px;">
+    <canvas id="mycanvas" height="100" width="100"></canvas>
+  </div>
+
+  <table>
+
+  <thead>
+    <tr>
+      <td>ジャンル</td>
+      <td>価格</td>
+      <td>概要</td>
+      <td>期間合計</td>
+    </tr>
+  </thead>
+  <tbody>
   {% for master in masters %}
-  <p> * {{master.genre}} {{ usages | filter_usages_count:master}} 件</p>
+  <tr>
+    <td>  {{master.genre}} ({{ usages | filter_usages_count:master}})</td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
     
-  <ul>
        {% for usage in usages %}
          {% if usage.genre == master %}
-         <li> ￥{{ usage.amount }} {{ usage.description }} </li>
+         <tr>
+         <td></td>
+         <td> ￥{{ usage.amount }}</td>
+         <td> {{ usage.description }} </td>
+         <td></td>
          {% endif %}
+         </tr>
        {% endfor %}
-       期間合計: {{ usages| filter_usages_sum:master}} 円
-  </ul>
+       <tr>
+         <td></td>           
+         <td></td>
+         <td></td>
+         <td>￥ {{ usages| filter_usages_sum:master}}</td>
+       </tr>
   {% endfor %}
+  </tbody>
+</table>
+
+{% autoescape off %}
+<script>
+  var data = {
+    datasets: [{
+      data: {{ usages| graph_data_generator}}
+    }],
+    labels: {{ usages| graph_label_generator}}
+  };
+</script>
+{% endautoescape %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.js"></script>
+<script src="{% static 'js/graph.js' %}"></script>
 {% endblock %}

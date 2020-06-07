@@ -20,6 +20,7 @@ body{
 .menu {
   background-color: #bab8bd;
   color: #F5F0F6;
+  height: 20px;
 }
 
 ul li{ 	
@@ -34,6 +35,5 @@ thead,tfoot {
     color: #fff;
 }
 table, tr {
-
   margin: 10px;
 }
