@@ -1,0 +1,26 @@
+{% extends 'parent.html' %}
+{% load summary_helper %}
+
+{% block contents %}
+  <h1>Summary</h1>
+  <h2>期間で絞り込む</h2>
+    <form method="Post">
+      {% csrf_token %}
+      <input name="date_from" type="date" value="{{ date_from }}"/><br>
+      <input name="date_to" type="date" value="{{ date_to }}"/>
+      <button type="submit">絞り込む</button>
+    </form>
+
+  {% for master in masters %}
+  <p> * {{master.genre}} {{ usages | filter_usages_count:master}} 件</p>
+    
+  <ul>
+       {% for usage in usages %}
+         {% if usage.genre == master %}
+         <li> ￥{{ usage.amount }} {{ usage.description }} </li>
+         {% endif %}
+       {% endfor %}
+       期間合計: {{ usages| filter_usages_sum:master}} 円
+  </ul>
+  {% endfor %}
+{% endblock %}

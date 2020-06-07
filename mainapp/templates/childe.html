@@ -1,0 +1,22 @@
+{% extends 'parent.html' %}
+
+{% block contents %}
+  <form method="Post">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit">Create</button>
+  </form>
+
+  {% for master in masters %}
+  <p>
+  * ({{master.management_id}}) {{master.genre}} (Created AT: {{master.created_at}}) ({{master.usage_set.count}}個の仕訳が登録されています)
+    {% if master.usage_set.count == 0 %} 
+      <a href="{% url 'mainapp:genre_delete' master.pk %}">[Delete]</a>
+    {% endif %}
+  </p>
+  {% endfor %}
+{% endblock %}
+
+
+    
+

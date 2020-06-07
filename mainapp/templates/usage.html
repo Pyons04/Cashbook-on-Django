@@ -1,0 +1,45 @@
+{% extends 'parent.html' %}
+
+{% block contents %}
+{{ form.non_field_errors }}
+  <form method="Post">
+  <table>
+    <tbody>
+    {% for field in form %}
+      {% csrf_token %}
+      <tr><td>{{ field.label_tag }}</td><td>{{ field }}</td></tr>
+      {% if field.help_text %}
+          <span class="helptext">{{ field.help_text }}</span>
+      {% endif %}
+      {{ field.errors }}
+    {% endfor %}
+    <button type="submit">Create</button>
+  </tbody>
+  </table>
+  </form>
+
+  <table>
+    <thead>
+      <tr>
+        <td>ID</td>
+        <td>ジャンル</td>
+        <td>概要</td>
+        <td>価格</td>
+        <td>支払時刻</td>
+        <td>Options</td>
+      </tr>
+  </thead>
+  <tbody>
+  {% for usage in usages %}
+  <tr>
+   <td>({{usage.management_id}}) </td>
+   <td>{{usage.genre}} </td>
+   <td>{{usage.description}}</td>
+   <td>￥{{usage.amount}}</td>
+   <td>Timestamp: {{usage.date}}</td>
+   <td> <a href="{% url 'mainapp:usage_delete' usage.pk %}">[Delete]</a><a href="{% url 'mainapp:usage_edit' usage.pk %}">[Edit]</a></td>
+  </tr>
+  {% endfor %}
+  </tbody>
+  </table>
+{% endblock %}

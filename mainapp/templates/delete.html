@@ -1,0 +1,9 @@
+{% extends 'parent.html' %}
+
+{% block contents %}
+<p> Do you want to delete it?</p>
+  <form method = "POST">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+  </form>
+{% endblock %}
